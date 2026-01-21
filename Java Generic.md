@@ -68,13 +68,13 @@ public class GenericDemo<T>
     }
 }
 ```
-
+usually we do not have to create Generic class we just use
 # Generic Class
 ## Templates are for objects, not for primitive data types.
 
-```
+```java
 package genericdemo;
-
+// This generic class only store one type of object
 class Data<T>
 {
     private T obj;
@@ -101,27 +101,52 @@ public class GenericDemo
     }
 }
 ```
+```java
+// This generic class store array of object of one type only
+package genericdemo;
 
-### Notes on Generics
-1. If no arguments are passed to the generic class, it will be treated like Object.
-2. Multiple parameters (generally used for key-value pairs).
-3. Subtype: When you inherit from a generic class, you must pass the type; otherwise, it defaults to Object. For generics, use for `child<T> extends parent<T>`.
-
-```
 class MyArray<T>
 {
+    T A[] = (T[]) new Object[10];
+    int length = 0;
+
+    public void append(T v)
+    {
+        A[length++] = v;
+    }
+
+    public void display()
+    {
+        for(int i=0; i<length; i++)
+        {
+            System.out.println(A[i]);
+        }
+    }
 }
 
-class MyArray2<T> extends MyArray<T>
+public static void main(String[] args)
 {
-   // super(T)
-}
+    MyArray<Integer> ma = new MyArray<>();
 
-MyArray2<String>
+    ma.append(10);
+    ma.append(20);
+    ma.append(30);
+
+    ma.display();
+}
 ```
+
+
+### Notes on Generics
+1. If no ParameterType use for the generic class, it will be treated like Object.
+2. Multiple parameters (generally used for key-value pairs & if no ParameterType is present then it will treat like object).
+3. Subtype:
+   a. if Parent ParameterType while extending subclass is mentioned then subclass only store that type else any object type `class MyArray2 extends MyArray<String>`.
+   b. if you want child class extends as generic then you must make child class as generic `class MyArray2<T> extends MyArray<T>`
+
 4. Bounded Type:
 ```
-class MyArray<T extends Number> // now only subclass of Number is permitted, extends must be used for class & interface
+class MyArray<T extends Number> // now only subclass of Number is permitted, extends must be used for both class & interface
 ```
 # 1. Generic Methods (Bound also works)
 
