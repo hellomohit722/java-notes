@@ -173,7 +173,7 @@ class genericdemo {
 
 
 ### Notes on Generics
-1. If no ParameterType use for the generic class, it will be treated like Object.
+1. If no ParameterType use for the generic class, it will be treated like Object `MyArray ma = new MyArray<>()`.
 2. Multiple parameters (generally used for key-value pairs & if no ParameterType is present then it will treat like object).
 3. Subtype:
    
