@@ -47,9 +47,22 @@ public class GenericDemo
 }
 ```
 
+Note : Generics do NOT exist at runtime in Java (type erasure)
+So at runtime:
+* T is removed
+* JVM does not know T = String
+Your class becomes something like:
+`
+public class GenericDemo {
+    Object[] data = (Object[]) new Object[3];
+}
+`
 
 ```java
 // Generic type array
+// This is a classic generics + arrays problem in Java.
+// Java forbids new T[3] for this exact reason.
+// Never create generic arrays using (T[]) new Object[].
 package genericdemo;
 
 public class GenericDemo<T>
