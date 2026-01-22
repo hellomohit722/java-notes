@@ -1,14 +1,15 @@
 
-# Java 8 --> minimal code, functional programing
-# Java 8 --> lambda expression, Streams, Date & Time API
+Java 8 --> minimal code, functional programing
+Java 8 --> lambda expression, Streams, Date & Time API
 
-## lambda expression is an anonymous function ( no name, no return type, no access modifier )
+#lambda expression is an anonymous function ( no name, no return type, no access modifier )
 
 if we have to implement single method in the class then we can use lambda expression (e.g. run in Runable interface).
 functional interface(Which have only one abstract methods rest can be default & static) use to hold lambda expression.
 lambda expression implements only functional interface
 
-# Predicate - Functional interface(Boolean valued function)
+# Predicate
+Functional interface(Boolean valued function)
 
 ```java
 //expression is treated as variable
@@ -22,7 +23,8 @@ Predicate<String> endsWithT = x->x.endsWith("T");
 System.out.println((startsWithA.and(endsWithT).test("Mohit")));
 ```
 
-# Function - do the operation and return
+# Function
+do the operation and return
 ```java
 Function<Integer,Integer> doubleIt = x->2*x;
 Function<Integer,Integer> tripleit = x->3*x;
@@ -35,7 +37,8 @@ Function<Object, Object> identity = Function.identity();
 System.out.println(identity.apply(51));
 ```
 
-# Consumer - just do operation no return
+# Consumer 
+just do operation no return
 ```java
 Consumer<Integer> consumer = x-> System.out.println(x);
 consumer.accept(46);
@@ -51,7 +54,8 @@ Consumer<List<Integer>> consumer1 = x ->
 consumer1.accept(list);
 ```
 
-# Suplier - Just do the operation No input
+# Suplier
+Just do the operation No input
 ```java
 Supplier<String> supplier = ()-> "Hello Mohit";
 System.out.println((supplier.get()));
@@ -91,7 +95,8 @@ Note: - we can pass the method as parameter by two way
 1. Lambda
 2. Method refernce 
 
-# Method reference --> use method without invoking & in place of lambda expression
+# Method reference
+use method without invoking & in place of lambda expression
 ```java
 List<String> students = Arrays.asList("Ram", "Shyam", "Ghanshyam");
 students.forEach(System.out::println);
@@ -120,7 +125,7 @@ Improve Readability and Maintainability
 Enable Easy Parallelism
 
 #What is stream ?
-a sequence of elements supporting functional and declarative programing
+A sequence of elements supporting functional and declarative programing
 
 #How to Use Streams ?
  Source, intermediate operations & terminal operation
@@ -168,48 +173,72 @@ long res = list.stream().filter(x -> x.startsWith("A")).count();
 System.out.println(res);
 ```
 
-        // 2.map
-        Stream<String> stringStream = list.stream().map(String::toUpperCase);
+2.map
 
-        // 3. sorted
-        Stream<String> sortedStream = list.stream().sorted();
-        Stream<String> sortedStreamUsingComparator = list.stream().sorted((a, b) -> a.length() - b.length());
+```java
+Stream<String> stringStream = list.stream().map(String::toUpperCase);
+Stream<String> stringStream = list.stream().map(String::toUpperCase);
+```
 
-        // 4. distinct
-        System.out.println(list.stream().filter(x -> x.startsWith("A")).distinct().count());
+3. sorted
+```java
+Stream<String> sortedStream = list.stream().sorted();
+Stream<String> sortedStreamUsingComparator = list.stream().sorted((a, b) -> a.length() - b.length());
+```
 
-        // 5. limit
-        System.out.println(Stream.iterate(1, x -> x + 1).limit(100).count());
+ 4. distinct
 
-        // 6. skip
-        System.out.println(Stream.iterate(1, x -> x + 1).skip(10).limit(100).count());
+```java
+System.out.println(list.stream().filter(x -> x.startsWith("A")).distinct().count());
+```
 
-        // 7. peek
-        // Performs an action on each element as it is consumed.
-        Stream.iterate(1, x -> x + 1).skip(10).limit(100).peek(System.out::println).count();
+5. limit
 
-        // 8. flatMap
-        // Handle streams of collections, lists, or arrays where each element is itself a collection
-        // Flatten nested structures (e.g., lists within lists) so that they can be processed as a single sequence of elements
-        // Transform and flatten elements at the same time.
-        List<List<String>> listOfLists = Arrays.asList(
+```java
+System.out.println(Stream.iterate(1, x -> x + 1).limit(100).count());
+```
+        
+6. skip
+
+```java
+System.out.println(Stream.iterate(1, x -> x + 1).skip(10).limit(100).count());
+```
+7. peek
+
+```java
+// Performs an action on each element as it is consumed.
+Stream.iterate(1, x -> x + 1).skip(10).limit(100).peek(System.out::println).count();
+```
+
+8. flatMap
+
+```java
+// Handle streams of collections, lists, or arrays where each element is itself a collection
+// Flatten nested structures (e.g., lists within lists) so that they can be processed as a single sequence of elements
+// Transform and flatten elements at the same time.
+
+List<List<String>> listOfLists = Arrays.asList(
                 Arrays.asList("apple", "banana"),
                 Arrays.asList("orange", "kiwi"),
                 Arrays.asList("pear", "grape")
-        );
-        System.out.println(listOfLists.get(1).get(1));
-        System.out.println(listOfLists.stream().flatMap(x -> x.stream()).map(String::toUpperCase).toList());
-        List<String> sentences = Arrays.asList(
+);
+
+System.out.println(listOfLists.get(1).get(1));
+System.out.println(listOfLists.stream().flatMap(x -> x.stream()).map(String::toUpperCase).toList());
+
+List<String> sentences = Arrays.asList(
                 "Hello world",
                 "Java streams are powerful",
                 "flatMap is useful"
-        );
-        System.out.println(sentences
+);
+
+System.out.println(sentences
                 .stream()
                 .flatMap(sentence -> Arrays.stream(sentence.split(" ")))
                 .map(String::toUpperCase)
-                .toList());
-
+                .toList()
+);
+```
 
 
 
