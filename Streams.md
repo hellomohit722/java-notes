@@ -112,8 +112,103 @@ class MobilePhone{
 }
 ```
 
+----
+# Stream : is a feature which process collection of data in a functional[lambda] & declarative manner[filter..].
+Simplify Data Processing
+Embrace Functional Programming
+Improve Readability and Maintainability
+Enable Easy Parallelism
+
+#What is stream ?
+a sequence of elements supporting functional and declarative programing
+
+#How to Use Streams ?
+ Source, intermediate operations & terminal operation
+        
+```java
+List<Integer> list = Arrays.asList(1,2,3);
+num = list.stream().filter(x->x%2==0).count();
+System.out.println(num);
+```
+
+# Creating Streams ---
+
+1. From collections
+```java
+List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+Stream<Integer> stream = list.stream();
+```        
+2. From Arrays
+```java
+String[] array = {"a", "b", "c"};
+Stream<String> stream1 = Arrays.stream(array);
+```     
+3. Using Stream.of()
+```java
+Stream<String> stream2 = Stream.of("a", "b");
+```     
+4. Infinite streams
+```java
+Stream.generate(() -> 1);
+Stream.iterate(1, x -> x + 1);
+```
+---
+# Intermediate operation
+
+Note: Intermediate operations transform a stream into another stream.
+They are lazy, meaning they don't execute until a terminal operation is invoked.
 
 
+1. filter
+```java
+List<String> list = Arrays.asList("Akshit", "Ram", "Shyam", "Ghanshyam", "Akshit");
+Stream<String> filteredStream = list.stream().filter(x -> x.startsWith("A"));
+// no filtering at this point
+long res = list.stream().filter(x -> x.startsWith("A")).count();
+System.out.println(res);
+```
+
+        // 2.map
+        Stream<String> stringStream = list.stream().map(String::toUpperCase);
+
+        // 3. sorted
+        Stream<String> sortedStream = list.stream().sorted();
+        Stream<String> sortedStreamUsingComparator = list.stream().sorted((a, b) -> a.length() - b.length());
+
+        // 4. distinct
+        System.out.println(list.stream().filter(x -> x.startsWith("A")).distinct().count());
+
+        // 5. limit
+        System.out.println(Stream.iterate(1, x -> x + 1).limit(100).count());
+
+        // 6. skip
+        System.out.println(Stream.iterate(1, x -> x + 1).skip(10).limit(100).count());
+
+        // 7. peek
+        // Performs an action on each element as it is consumed.
+        Stream.iterate(1, x -> x + 1).skip(10).limit(100).peek(System.out::println).count();
+
+        // 8. flatMap
+        // Handle streams of collections, lists, or arrays where each element is itself a collection
+        // Flatten nested structures (e.g., lists within lists) so that they can be processed as a single sequence of elements
+        // Transform and flatten elements at the same time.
+        List<List<String>> listOfLists = Arrays.asList(
+                Arrays.asList("apple", "banana"),
+                Arrays.asList("orange", "kiwi"),
+                Arrays.asList("pear", "grape")
+        );
+        System.out.println(listOfLists.get(1).get(1));
+        System.out.println(listOfLists.stream().flatMap(x -> x.stream()).map(String::toUpperCase).toList());
+        List<String> sentences = Arrays.asList(
+                "Hello world",
+                "Java streams are powerful",
+                "flatMap is useful"
+        );
+        System.out.println(sentences
+                .stream()
+                .flatMap(sentence -> Arrays.stream(sentence.split(" ")))
+                .map(String::toUpperCase)
+                .toList());
 
 
 
