@@ -188,7 +188,7 @@ System.out.println(res);
 
 ```java
 Stream<String> stringStream = list.stream().map(String::toUpperCase);
-Stream<String> stringStream = list.stream().map(String::toUpperCase);
+List<String> list = list.stream().map(String::toUpperCase).toList();
 ```
 
 3. sorted
@@ -200,13 +200,13 @@ Stream<String> sortedStreamUsingComparator = list.stream().sorted((a, b) -> a.le
  4. distinct
 
 ```java
-System.out.println(list.stream().filter(x -> x.startsWith("A")).distinct().count());
+long a = list.stream().filter(x -> x.startsWith("A")).distinct().count();
 ```
 
 5. limit
 
 ```java
-System.out.println(Stream.iterate(1, x -> x + 1).limit(100).count());
+long a = Stream.iterate(1, x -> x + 1).limit(100).count();
 ```
         
 6. skip
