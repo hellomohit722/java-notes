@@ -1,11 +1,14 @@
 
 Java 8 --> minimal code, functional programing
+
 Java 8 --> lambda expression, Streams, Date & Time API
 
-#lambda expression is an anonymous function ( no name, no return type, no access modifier )
+# lambda expression is an anonymous function ( no name, no return type, no access modifier )
 
 if we have to implement single method in the class then we can use lambda expression (e.g. run in Runable interface).
+
 functional interface(Which have only one abstract methods rest can be default & static) use to hold lambda expression.
+
 lambda expression implements only functional interface
 
 # Predicate
