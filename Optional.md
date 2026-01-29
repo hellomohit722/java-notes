@@ -8,7 +8,7 @@ Its main goal is to **reduce `NullPointerException` (NPE)** and make the **absen
 > **Key idea:** Instead of returning `null`, return an `Optional`.
 
 ---
-
+ 
 ## 2. Why `Optional` Was Introduced
 
 ### Problems with `null`
