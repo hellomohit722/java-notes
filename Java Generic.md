@@ -48,17 +48,53 @@ public class GenericDemo
     }
 }
 ```
+# What actually happens — 2 stages:
+## 🔵 Stage 1 — Compile Time (your .java → .class)
+### The compiler:
+- ✅ Uses String to check for type errors
+- ✅ Inserts hidden casts automatically
+- ❌ Then THROWS AWAY the type info — this is Erasure
 
-Note : Generics do NOT exist at runtime in Java (type erasure)
-So at runtime:
-* T is removed
-* JVM does not know T = String
-Your class becomes something like:
-`
-public class GenericDemo {
-    Object[] data = (Object[]) new Object[3];
+```java
+// What YOU write:
+GenericBox<String> box = new GenericBox<>();
+box.set("Hello");
+String s = box.get();       // compiler knows it's String here
+
+// What compiler GENERATES in bytecode (.class file):
+GenericBox box = new GenericBox();  // <String> is GONE
+box.set("Hello");
+String s = (String) box.get();     // compiler secretly inserted this cast!
+```
+
+## 🔴 Stage 2 — Runtime (JVM runs the .class)
+### JVM only sees:``
+```java
+class GenericBox {
+    Object value;        // T became Object
+
+    void set(Object v)  { this.value = v; }
+    Object get()        { return this.value; }
 }
-`
+```
+**T is completely gone. JVM has no idea T ever existed.**
+
+---
+
+## So where does T become `String` and where does it become `Object`?
+```
+YOUR CODE (compile time)     →    JVM / BYTECODE (runtime)
+─────────────────────────────────────────────────────────
+GenericBox<String>           →    GenericBox          (String gone)
+T value                      →    Object value        (T → Object)
+box.get() returns String     →    box.get() returns Object
+                                  + hidden (String) cast added by compiler
+```
+<img width="1440" height="1102" alt="image" src="https://github.com/user-attachments/assets/c06933de-e467-4359-b954-ff64e698281e" />
+
+## Here's the simple mental model:
+- At compile time — the compiler pretends T = String. It uses that info to catch your mistakes and then secretly inserts casts. Then it throws String away.
+- At runtime — the JVM only sees Object (or whatever the bound is). T is completely gone from memory.
 
 ```java
 // Generic type array
