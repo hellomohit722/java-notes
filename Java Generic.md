@@ -233,10 +233,33 @@ class genericdemo {
 class MyArray<T extends Number> // now only subclass of Number is permitted, extends must be used for both class & interface
 ```
 # Since we write Generic class we can also write generic method
-as in generic class we need to write <T> (ParametricType) after className, but in generic methods we need to write <T>(ParametricType) before return type.
+- as in generic class we need to write <T> (ParametricType) after className, but in generic methods we need to write <T>(ParametricType) before return type.
 
+# ✅ 1) Wildcard ? — Used in parameter types (unknown type)
 1. Generic Methods (Bound also works)
+> ? means: “some type, but I don’t care which one.”
+## Use it when the method does NOT depend on the specific generic type.
+```java
+static void fun(MyArray<?> obj)     //static void fun(MyArray obj) works same
+{
+    obj.display();
+}
+```
+### ✔ This method can accept:
+```java
+MyArray<Integer>
+MyArray<String>
+MyArray<Double>
+MyArray<Anything>
+```
+# ✅ 2) Type parameter <T> — Used when method depends on the type
 
+```java
+static <T> void fun(MyArray<T> obj) 
+{
+    obj.display();
+}
+```
 ```java
 public class GenericDemo
 {
@@ -255,42 +278,11 @@ public class GenericDemo
     }
 }
 ```
- 2. Wildcard `?` : we can use it as argument list/parameter list
 
-```java
-static <T> void fun(MyArray<T> obj)       //if you want to add <T>(Parametric Type) as argument then must add <T> before return type
-    {
-        obj.display();
-    }
-```
+# ✅ 3. Lower Bound: `void fun(MyArray<? super child> obj)` {parent of child & child is only accepted} 
+# ✅ 4. Upper Bound `void fun(MyArray<? extends parent> obj)` {child of parent & parent is only accepted} 
 
-```
-public class GenericDemo
-{
-    static void fun(MyArray<?> obj)       //static void fun(MyArray obj) works same
-    {
-        obj.display();
-    }
-
-    public static void main(String[] args)
-    {
-        MyArray<String> ma1 = new MyArray<>();
-        ma1.append("Hi");
-        ma1.append("Bye");
-
-        MyArray<Integer> ma2 = new MyArray<>();
-        ma2.append(10);
-        ma2.append(20);
-
-        fun(ma1);
-        fun(ma2);
-    }
-}
-```
-3. Lower Bound: `void fun(MyArray<? super child> obj)` {parent of child & child is only accepted} 
-4. Upper Bound `void fun(MyArray<? extends parent> obj)` {child of parent & parent is only accepted} 
-
-### Do’s and Don’ts in Generics
+# Do’s and Don’ts in Generics
 
 1. Only extends is allowed in Generic class definition.
 2. extends is used for interfaces also.
