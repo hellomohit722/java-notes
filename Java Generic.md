@@ -97,27 +97,36 @@ box.get() returns String     →    box.get() returns Object
 - At runtime — the JVM only sees Object (or whatever the bound is). T is completely gone from memory.
 
 ```java
-// Generic type array
-// This is a classic generics + arrays problem in Java.
-// Java forbids new T[3] for this exact reason.
-// Never create generic arrays using (T[]) new Object[].
-package genericdemo;
-
-public class GenericDemo<T>
+// WHAT YOU WROTE (.java):               // WHAT COMPILER GENERATED (.class):
+class GenericDemo<T>                     class GenericDemo              // <T> erased
 {
-    T data[] = (T[]) new Object[3];         // static is not allowed because T type is not defined yet.
+    T data[] = (T[]) new Object[3];      Object[] data = new Object[3]; // T→Object
 
     public static void main(String[] args)
     {
-        GenericDemo<String> gd = new GenericDemo();   //
+        GenericDemo<String> gd = ...;    GenericDemo gd = ...;          // <String> erased
 
-        gd.data[0] = "hi";
-        gd.data[1] = "bye";
-        gd.data[2] = new Integer(10);  // compiler give error here as only String can be use
+        gd.data[0] = "hi";              checkcast String[]  ← injected!
+                                         gd.data[0] = "hi";
 
-        String str = gd.data[0];     // No need of typeCasting
+        gd.data[1] = "bye";             checkcast String[]  ← injected!
+                                         gd.data[1] = "bye";
+
+        String str = gd.data[0];        checkcast String[]  ← injected!
+                                         String str = gd.data[0];
     }
 }
+```
+
+---
+
+## Surprise — cast is injected 3 times, not just once!
+
+Every single time you **touch** `gd.data`, the compiler inserts a `checkcast`:
+```
+line 12: checkcast  [Ljava/lang/String  ← before writing "hi"
+line 23: checkcast  [Ljava/lang/String  ← before writing "bye"  
+line 34: checkcast  [Ljava/lang/String  ← before reading into str
 ```
 
 ```java
