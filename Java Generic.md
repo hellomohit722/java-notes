@@ -1,6 +1,7 @@
 # Generics in Java
-- Generics allow you to write type-safe, reusable code by parameterizing classes, interfaces, and methods with types. Instead of working with Object and casting everywhere, you specify the exact type at compile time.
-before generic objects are used for generalization
+- Generics allow you to write type-safe, reusable code by parameterizing classes, interfaces, and methods with types.
+- Instead of working with Object and casting everywhere, you specify the exact type at compile time.
+- before generic objects are used for generalization
 # Object for Generalization
 
 Object can be used for generalization, but it has some problems:
