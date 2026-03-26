@@ -165,8 +165,13 @@ Stream<String> stream2 = Stream.of("a", "b");
 ```     
 4. Infinite streams
 ```java
-Stream.generate(() -> 1);
-Stream.iterate(1, x -> x + 1);
+- a. Infinite stream (Java 8)
+    - ```Stream.iterate(T seed, UnaryOperator<T> f)```
+
+- b. Finite stream (Java 9+)
+    - ```Stream.iterate(T seed, Predicate<T> hasNext, UnaryOperator<T> f)```
+- c. Always infinite
+    - ```Stream.generate(Supplier<T> s)```
 ```
 ---
 # Intermediate operation
