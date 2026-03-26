@@ -323,7 +323,10 @@ public class GenericDemo
     }
 }
 ```
-
+# 🔥 This is called the PECS Rule
+## 🟢 Producer Extends, Consumer Super
+- If structure produces data (read) → use extends
+- If structure consumes data (write) → use super
 
 
 
