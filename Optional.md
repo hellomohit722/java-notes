@@ -134,8 +134,11 @@ Condition fails → empty Optional
 
 `opt.stream().forEach(System.out::println);`
 
-- Empty → empty stream
-- Present → single-element stream
+| Optional State | Resulting Stream      |
+| -------------- | --------------------- |
+| Empty          | Empty stream          |
+| Present        | Stream with 1 element |
+
 
 # Using Optional in Stream Pipelines
 
