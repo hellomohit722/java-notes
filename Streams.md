@@ -120,13 +120,9 @@ class MobilePhone{
 }
 ```
 ---
-# Streams in Programming
+# Streams
 
-## What is a Stream?
-A **Stream** is a sequence of elements that supports **functional** and **declarative programming**.  
-It allows data to be processed in a pipeline style using operations like filtering, mapping, and reducing.
-
-## Key Characteristics of Streams
+# Key Characteristics of Streams
 - Process collections of data in a **functional (lambda-based)** manner
 - Use **declarative programming** (describe *what* to do, not *how* to do it)
 - Do not store data; they **process data on demand**
@@ -138,32 +134,10 @@ It allows data to be processed in a pipeline style using operations like filteri
 - **Improves readability and maintainability**
 - **Enables easy parallelism**
 
-## Stream Processing Model
-* A stream pipeline consists of three main parts: Source, intermediate operations & terminal operation
-        
-```java
-List<Integer> list = Arrays.asList(1,2,3);
-num = list.stream().filter(x->x%2==0).count();
-System.out.println(num);
-```
-
+ 
 # Creating Streams
 
-1. From collections
-```java
-List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
-Stream<Integer> stream = list.stream();
-```        
-2. From Arrays
-```java
-String[] array = {"a", "b", "c"};
-Stream<String> stream1 = Arrays.stream(array);
-```     
-3. Using Stream.of()
-```java
-Stream<String> stream2 = Stream.of("a", "b");
-```     
-4. Infinite streams
+## Infinite streams
 
 - a. Infinite stream (Java 8)
     - ```Stream.iterate(T seed, UnaryOperator<T> f)```
@@ -173,156 +147,21 @@ Stream<String> stream2 = Stream.of("a", "b");
 - c. Always infinite
     - ```Stream.generate(Supplier<T> s)```
 ---
-# Intermediate operation
 
-Note: Intermediate operations transform a stream into another stream.
-They are lazy, meaning they don't execute until a terminal operation is invoked.
-
-
-1. filter
-```java
-List<String> list = Arrays.asList("Akshit", "Ram", "Shyam", "Ghanshyam", "Akshit");
-Stream<String> filteredStream = list.stream().filter(x -> x.startsWith("A"));
-// no filtering at this point
-long res = list.stream().filter(x -> x.startsWith("A")).count();
-System.out.println(res);
-```
-
-2. map
-
-```java
-Stream<String> stringStream = list.stream().map(String::toUpperCase);
-List<String> list = list.stream().map(String::toUpperCase).toList();
-```
-
-3. sorted
-```java
-Stream<String> sortedStream = list.stream().sorted();
-Stream<String> sortedStreamUsingComparator = list.stream().sorted((a, b) -> a.length() - b.length());
-```
-
- 4. distinct
-
-```java
-long a = list.stream().filter(x -> x.startsWith("A")).distinct().count();
-```
-
-5. limit
-
-```java
-long a = Stream.iterate(1, x -> x + 1).limit(100).count();
-```
-        
-6. skip
-
-```java
-System.out.println(Stream.iterate(1, x -> x + 1).skip(10).limit(100).count());
-```
-7. peek
-
-```java
-// Performs an action on each element as it is consumed.
-Stream.iterate(1, x -> x + 1).skip(10).limit(100).peek(System.out::println).count();
-```
-
-8. flatMap
-
-```java
-// Handle streams of collections, lists, or arrays where each element is itself a collection
-// Flatten nested structures (e.g., lists within lists) so that they can be processed as a single sequence of elements
-// Transform and flatten elements at the same time.
-
-List<List<String>> listOfLists = Arrays.asList(
-                Arrays.asList("apple", "banana"),
-                Arrays.asList("orange", "kiwi"),
-                Arrays.asList("pear", "grape")
-);
-
-System.out.println(listOfLists.get(1).get(1));
-System.out.println(listOfLists.stream().flatMap(x -> x.stream()).map(String::toUpperCase).toList());
-
-List<String> sentences = Arrays.asList(
-                "Hello world",
-                "Java streams are powerful",
-                "flatMap is useful"
-);
-
-System.out.println(sentences
-                .stream()
-                .flatMap(sentence -> Arrays.stream(sentence.split(" ")))
-                .map(String::toUpperCase)
-                .toList()
-);
 ```
 # Terminal Operation
 
 List<Integer> list = Arrays.asList(1, 2, 3);
 
-1. collect
-
-```java
-list.stream().skip(1).collect(Collectors.toList());
-list.stream().skip(1).toList();
-list.stream().skip(1).toSet();
-```
-
-2. forEach
-
-```java
-void forEach(Consumer<? super T> action)
-
-list.stream().forEach(x -> System.out.println(x));
-```
-
-3. reduce
- Combines elements to produce a single result
+## reduce
+- Combines elements to produce a single result
 
 ```java
 Optional<Integer> optionalInteger = list.stream().reduce(Integer::sum);
 System.out.println(optionalInteger.get());
 ```
-4. count
 
-```java
-long a = list.stream().filter(x -> x.startsWith("A")).distinct().count();
-```
-
-5. anyMatch, allMatch, noneMatch
-
-```java
-boolean anyMatch(Predicate<? super T> predicate)
-
-boolean b = list.stream().anyMatch(x -> x % 2 == 0);
-System.out.println(b);
-
-boolean b1 = list.stream().allMatch(x -> x > 0);
-System.out.println(b1);
-
-boolean b2 = list.stream().noneMatch(x -> x < 0);
-System.out.println(b2);
-```
-
-6. findFirst, findAny
-
-```java
-System.out.println(list.stream().findFirst().get());
-System.out.println(list.stream().findAny().get());
-```
-
-7. toArray()
-
-```java
-Object[] array = Stream.of(1, 2, 3).toArray();
-```
-
-8. min / max
-
-```java
-System.out.println("max: " + Stream.of(2, 44, 69).max((o1, o2) -> o2 - o1));
-System.out.println("min: " + Stream.of(2, 44, 69).min(Comparator.naturalOrder()));
-```
-
-9. forEachOrdered
+## forEachOrdered
 
 ```java
 List<Integer> numbers0 = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
@@ -338,8 +177,8 @@ stream.forEach(System.out::println);
 List<String> list1 = stream.map(String::toUpperCase).toList(); // exception
 ```
 
-Statefull: which know about the other elements like sorted
-stateless: which do not know about the other elements like map
+- Statefull: which know about the other elements like sorted
+- stateless: which do not know about the other elements like map
 
 # Parallel Stream
 * A type of stream that enables parallel processing of elements
