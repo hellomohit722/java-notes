@@ -147,19 +147,14 @@ class MobilePhone{
 - c. Always infinite
     - ```Stream.generate(Supplier<T> s)```
 ---
-
-```
 # Terminal Operation
 
-List<Integer> list = Arrays.asList(1, 2, 3);
+- List<Integer> list = Arrays.asList(1, 2, 3);
 
 ## reduce
-- Combines elements to produce a single result
-
-```java
-Optional<Integer> optionalInteger = list.stream().reduce(Integer::sum);
-System.out.println(optionalInteger.get());
-```
+> Combines elements to produce a single result
+- Optional<T> reduce(BinaryOperator<T> accumulator)
+- T reduce(T identity, BinaryOperator<T> accumulator)
 
 ## forEachOrdered
 
