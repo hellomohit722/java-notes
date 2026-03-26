@@ -108,15 +108,23 @@ map(Function)
 
 # flatMap(Function)
 
-Used when the mapping function returns an Optional.
+- Used when the mapping function returns an Optional.
+- flatMap() automatically flattens one level of Optional.
 
-`Optional<String> result = opt.flatMap(this::getOptionalValue);`
+```java
+Optional<String> opt = Optional.of("hello");
+Optional<String> getOptionalValue(String s) {
+    return s.length() > 3 ? Optional.of(s.toUpperCase())
+                          : Optional.empty();
+}
+Optional<Optional<String>> result =
+        opt.map(this::getOptionalValue);
+```
 
 Prevents nested Optional<Optional<T>>.
 
 # filter(Predicate)
-
-Keeps value only if condition matches.
+- Keeps value only if condition matches.
 
 `Optional<String> filtered =Optional.of("Java").filter(s -> s.length() > 3);`
 
