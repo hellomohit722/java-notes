@@ -142,11 +142,25 @@ Condition fails → empty Optional
 
 # Using Optional in Stream Pipelines
 
-`List<String> result =
-    list.stream()
-        .map(this::findValue) // returns Optional<String>
-        .flatMap(Optional::stream)
-        .toList();`
+```java
+class A{
+    List<Integer> list = List.of(1, 2, 3, 4);
+    Optional<String> findValue(Integer n) {
+        return n % 2 == 0
+                ? Optional.of("Even: " + n)
+                : Optional.empty();
+    }
+    void f(){
+
+    List<String> result =
+            list.stream()
+                    .map(this::findValue)   // returns Optional<String>
+                    .flatMap(Optional::stream)
+                    .toList();
+        System.out.println(result);
+    }
+}
+```
 
 # Best Practices
 
